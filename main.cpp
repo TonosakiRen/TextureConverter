@@ -11,16 +11,24 @@ enum Argmument {
 };
 int main(int argc,char* argv[]) {
 
-	assert(argc >= kNumArgument);
+	if (argc < kNumArgument) {
+		//Žg‚¢‚©‚½‚ð•\Ž¦‚·‚é
+		TextureConverter::OutputUsage();
+		return 0;
+	}
 
 	HRESULT hr = CoInitializeEx(0, COINIT_MULTITHREADED);
 	assert(SUCCEEDED(hr));
 
+	int numOptions = argc - kNumArgument;
+
+	char** options = argv + kNumArgument;
+
 	TextureConverter converter;
-	converter.ConvertTextureWICToDDS(argv[kFilePath]);
+	converter.ConvertTextureWICToDDS(argv[kFilePath], numOptions, options);
 
 	CoUninitialize();
 
-	system("pause");
+	//system("pause");
 	return 0;
 }
